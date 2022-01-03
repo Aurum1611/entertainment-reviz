@@ -1,8 +1,17 @@
-img  {
-	padding: 10px;
-	max-width:540px;
+img {
+    padding: 10px;
+    max-width: 600px;
+    max-height: 500px;
+}
+
+.card {
+    padding: 30px;
 }
 
 body {
-	margin: 0px 10px 0px 10px;
+    margin: 0px 10px 0px 10px;
+}
+
+a.nav-link {
+    font-size: larger;
 }
