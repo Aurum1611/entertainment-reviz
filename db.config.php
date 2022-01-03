@@ -18,7 +18,7 @@ function runQuery($sql)
     try {
         return $GLOBALS['conn']->query($sql);
     } catch (Exception $e) {
-        echo '<script>alert(' . $e->getMessage() . ');</script>';
+        echo '<script>console.log("' . $e->getMessage() . '");</script>';
     }
 }
 
