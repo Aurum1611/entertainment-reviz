@@ -36,11 +36,45 @@ include "db.config.php";
 
     include "views/partials/nav-bar.html";
     echo "<br><br><br>";
+    
+	$myfile = fopen("apikeys.json", "r") or die("Unable to open file!");
+	$apiKey = json_decode(fread($myfile, filesize("apikeys.json")))->books;
+	fclose($myfile);
 
-    for ($i = 0; $i < 3; $i++) {
-        include "views/partials/repeat-content.html";
-    }
 
+	function repeat_content($apiKey, $id)
+	{
+		$response = json_decode(file_get_contents("https://www.googleapis.com/books/v1/volumes/$id?key=$apiKey"));
+
+		$volumeInfo = $response->volumeInfo;
+		$imageLinks = $volumeInfo->imageLinks;
+
+		echo "
+		<div class=\"card mb-3\" style=\" margin:10px;\">
+			<div class=\"row g-0\">
+				<div class=\"col-md-4\">
+					<img src=\"$imageLinks->thumbnail\" class=\"img-fluid rounded-start\" alt=\"...\">
+				</div>
+				<div class=\"col-md-8\">
+					<div class=\"card-body\">
+						<h5 class=\"card-title\">$volumeInfo->title</h5>
+						<p class=\"card-text\">$volumeInfo->description</p>
+						<a href=\"./views/detailed-content.php\" class=\"btn btn-primary\">Show More</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		";
+	}
+
+	repeat_content($apiKey, 'zyTCAlFPjgYC');
+	// Adding ajax for dynamic refreshing
+
+	$search = json_decode(file_get_contents("https://www.googleapis.com/books/v1/volumes?q=history&key=$apiKey"));
+	for ($i = 0; $i < $search->totalItems % 20; $i++) {
+		repeat_content($apiKey, $search->items[$i]->id);
+	}
+    
     ?>
 
 </body>

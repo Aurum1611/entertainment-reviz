@@ -25,9 +25,8 @@
     echo "
     <script>
         var elements = document.getElementsByClassName('nav-link');
-        var element = elements[0];
-        element.classList.remove('active');
-        elements[3].classList.add('active');
+        elements[0].classList.remove('active');
+        elements[2].classList.add('active');
     </script>  
     ";
 
