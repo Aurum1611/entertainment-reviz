@@ -17,6 +17,14 @@
 
     include "partials/nav-bar.html";
     echo "<br><br><br>";
+    echo "
+    <script>
+        var elements = document.getElementsByClassName('nav-link');
+        var element = elements[0];
+        element.classList.remove('active');
+        elements[4].classList.add('active');
+    </script>  
+    ";
 
     // Load XML file
     $xml = new DOMDocument;

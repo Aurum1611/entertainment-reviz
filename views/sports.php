@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="../public/styles/style.css">
 
-    <title>Books</title>
+    <title>Sports</title>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
@@ -25,8 +25,9 @@
     echo "
     <script>
         var elements = document.getElementsByClassName('nav-link');
-        elements[0].classList.remove('active');
-        elements[2].classList.add('active');
+        var element = elements[0];
+        element.classList.remove('active');
+        elements[3].classList.add('active');
     </script>  
     ";
 
