@@ -67,13 +67,12 @@ include "db.config.php";
 		";
 	}
 
-	repeat_content($apiKey, 'zyTCAlFPjgYC');
-	// Adding ajax for dynamic refreshing
-
 	$search = json_decode(file_get_contents("https://www.googleapis.com/books/v1/volumes?q=history&key=$apiKey"));
 	for ($i = 0; $i < $search->totalItems % 20; $i++) {
 		repeat_content($apiKey, $search->items[$i]->id);
 	}
+
+	include "views/partials/footer.html";
     
     ?>
 
