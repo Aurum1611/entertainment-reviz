@@ -20,11 +20,12 @@
 
 	<?php
 
-	include "partials/nav-bar.html";
-	echo "<br><br><br>";
+	include "partials/nav-bar.php";
+	echo "<br><br><br><br>";
+	// Search link updation problem still persists
 	echo "
     <script>
-        var elements = document.getElementsByClassName('nav-link');
+        elements = document.getElementsByClassName('nav-link');
         elements[0].classList.remove('active');
     </script>  
     ";
@@ -35,6 +36,7 @@
 
 	function repeat_content($apiKey, $id)
 	{
+		// Stop making multiple requests as you're already getting content from your first one.
 		$response = json_decode(file_get_contents("https://www.googleapis.com/books/v1/volumes/$id?key=$apiKey"));
 
 		$volumeInfo = $response->volumeInfo;
@@ -61,8 +63,10 @@
 	$keywords = $_GET['keywords'];
 
 	$search = json_decode(file_get_contents("https://www.googleapis.com/books/v1/volumes?q=$keywords&key=$apiKey"));
-	for ($i = 0; $i < 6; $i++) {
-		repeat_content($apiKey, $search->items[$i]->id);
+	for ($i = 0; $i < $search->totalItems; $i++) {
+		$item = $search->items[$i] ?? null;
+		if ($item != null)
+			repeat_content($apiKey, $item->id);
 	}
 
 	include 'partials/footer.html';

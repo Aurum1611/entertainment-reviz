@@ -20,11 +20,11 @@
 
     <?php
 
-    include "partials/nav-bar.html";
-    echo "<br><br><br>";
+    include "partials/nav-bar.php";
+	echo "<br><br><br><br>";
     echo "
     <script>
-        var elements = document.getElementsByClassName('nav-link');
+        elements = document.getElementsByClassName('nav-link');
         var element = elements[0];
         element.classList.remove('active');
         elements[1].classList.add('active');

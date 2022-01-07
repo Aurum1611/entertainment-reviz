@@ -20,13 +20,14 @@
 
 	<?php
 
-	include "partials/nav-bar.html";
-	echo "<br><br><br>";
+	include "partials/nav-bar.php";
+	echo "<br><br><br><br>";
 	echo "
     <script>
-        var elements = document.getElementsByClassName('nav-link');
+        elements = document.getElementsByClassName('nav-link');
         elements[0].classList.remove('active');
         elements[3].classList.add('active');
+		console.log('classlist also executes');
     </script>  
     ";
 
@@ -65,9 +66,13 @@
 	// Adding ajax for dynamic refreshing
 
 	$search = json_decode(file_get_contents("https://www.googleapis.com/books/v1/volumes?q=history&key=$apiKey"));
-	for ($i = 0; $i < $search->totalItems % 20; $i++) {
-		repeat_content($apiKey, $search->items[$i]->id);
+	for ($i = 0; $i < $search->totalItems; $i++) {
+		$item = $search->items[$i] ?? null;
+		if ($item != null)
+			repeat_content($apiKey, $item->id);
 	}
+
+	include 'partials/footer.html';
 
 	?>
 

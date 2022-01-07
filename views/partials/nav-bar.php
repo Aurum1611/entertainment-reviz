@@ -1,5 +1,3 @@
-// TODO: Root changes each time this partial is loaded in a file inside a diff directory. That means // links will have to be modified for each folder change in loading.
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href=".">
@@ -34,3 +32,20 @@
         </div>
     </div>
 </nav>
+
+<?php
+if (str_contains(getcwd(), 'views'))
+    echo "
+    <script>
+    let elements = document.getElementsByClassName('nav-link');
+    for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        var path = element.getAttribute('href');
+        var pathArr = path.split('/');
+        element.setAttribute('href', pathArr[pathArr.length - 1]);
+        if(pathArr[pathArr.length-1]=='.')
+            element.setAttribute('href', '../');
+        console.log(elements[i]);
+    }
+    </script>";
+?>
