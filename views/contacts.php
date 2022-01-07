@@ -16,7 +16,7 @@
     <?php
 
     include "partials/nav-bar.html";
-    echo "<br><br><br>";
+    echo "<br><br><br><br>";
     echo "
     <script>
         var elements = document.getElementsByClassName('nav-link');
@@ -26,21 +26,33 @@
     </script>  
     ";
 
-    // Load XML file
-    $xml = new DOMDocument;
-    $xml->load('../contacts.xml');
+    try {
+        // Load XML file
+        $xml = new DOMDocument;
+        $xml->load('../contacts.xml');
 
-    // Load XSL file
-    $xsl = new DOMDocument;
-    $xsl->load('../public/styles/contacts.xsl');
+        // Load XSL file
+        $xsl = new DOMDocument;
+        $xsl->load('../public/styles/contacts.xsl');
 
-    // Configure the transformer
-    $proc = new XSLTProcessor;
+        // Configure the transformer
+        $proc = new XSLTProcessor;
 
-    // Attach the xsl rules
-    $proc->importStyleSheet($xsl);
+        // Attach the xsl rules
+        $proc->importStyleSheet($xsl);
 
-    echo $proc->transformToXML($xml);
+        echo $proc->transformToXML($xml);
+    } catch (Error $e) {
+        echo '<script>console.log("' . $e->getMessage() . '");</script>';
+
+        $x = $xml->documentElement;
+        foreach ($x->childNodes as $item) {
+            if ($item->nodeName === '#text') continue;
+            else
+                echo '<h3 style="text-align: center">' . ucwords($item->nodeName) . ": "
+                    . $item->nodeValue . "</h3><br>";
+        }
+    }
 
     include "partials/footer.html"
 
